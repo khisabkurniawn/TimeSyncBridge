@@ -2,8 +2,8 @@ name: Deploy TimeSyncBridge
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
@@ -21,6 +21,8 @@ jobs:
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: target/TimeSyncBridge-*.jar
+          files: target/TimeSyncBridge-0.1.0.jar
+          tag_name: v1.0.0
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
