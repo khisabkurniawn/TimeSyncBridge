@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -21,7 +24,7 @@ jobs:
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: target/TimeSyncBridge-0.1.0.jar
+          files: target/TimeSyncBridge-*.jar
           tag_name: v1.0.0
           generate_release_notes: true
         env:
