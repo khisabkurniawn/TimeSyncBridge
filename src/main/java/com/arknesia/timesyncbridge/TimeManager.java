@@ -1,16 +1,17 @@
 package com.arknesia.timesyncbridge;
 
-import java.util.Calendar;
-
 public class TimeManager {
     private long currentTicks;
+    private String currentDate;
 
     public TimeManager() {
         this.currentTicks = 0;
+        this.currentDate = "Day 1, Month 1, Year 1";
     }
 
-    public void updateTime(long ticks) {
+    public void updateTime(long ticks, String date) {
         this.currentTicks = ticks;
+        this.currentDate = date;
     }
 
     public long getCurrentTicks() {
@@ -23,11 +24,22 @@ public class TimeManager {
         return String.format("%02d:%02d", hours, minutes);
     }
 
-    public Calendar getCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(1, Calendar.JANUARY, 1);
-        long daysPassed = currentTicks / 24000;
-        calendar.add(Calendar.DAY_OF_YEAR, (int) daysPassed);
-        return calendar;
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public int getCurrentDay() {
+        String[] parts = currentDate.split(", ");
+        return Integer.parseInt(parts[0].split(" ")[1]);
+    }
+
+    public int getCurrentMonth() {
+        String[] parts = currentDate.split(", ");
+        return Integer.parseInt(parts[1].split(" ")[1]);
+    }
+
+    public int getCurrentYear() {
+        String[] parts = currentDate.split(", ");
+        return Integer.parseInt(parts[2].split(" ")[1]);
     }
 }

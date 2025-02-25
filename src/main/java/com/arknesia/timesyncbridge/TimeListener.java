@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class TimeListener implements PluginMessageListener {
     private final TimeSyncBridge plugin;
@@ -21,11 +22,19 @@ public class TimeListener implements PluginMessageListener {
 
         ByteBuffer buffer = ByteBuffer.wrap(message);
         long ticks = buffer.getLong();
+        String date = readString(buffer);
 
-        plugin.getTimeManager().updateTime(ticks);
+        plugin.getTimeManager().updateTime(ticks, date);
 
         for (World world : Bukkit.getWorlds()) {
             world.setTime(ticks);
         }
+    }
+
+    private String readString(ByteBuffer buffer) {
+        int length = buffer.getShort();
+        byte[] bytes = new byte[length];
+        buffer.get(bytes);
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

@@ -3,8 +3,6 @@ package com.arknesia.timesyncbridge;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
-import java.util.Calendar;
-
 public class TimeSyncPlaceholder extends PlaceholderExpansion {
     private final TimeSyncBridge plugin;
 
@@ -30,7 +28,10 @@ public class TimeSyncPlaceholder extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
         long ticks = plugin.getTimeManager().getCurrentTicks();
-        Calendar calendar = plugin.getTimeManager().getCurrentDate();
+        String date = plugin.getTimeManager().getCurrentDate();
+        int day = plugin.getTimeManager().getCurrentDay();
+        int month = plugin.getTimeManager().getCurrentMonth();
+        int year = plugin.getTimeManager().getCurrentYear();
 
         switch (identifier.toLowerCase()) {
             case "time_24h":
@@ -40,17 +41,17 @@ public class TimeSyncPlaceholder extends PlaceholderExpansion {
             case "time_ampm":
                 return getAMPM(ticks);
             case "date":
-                return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+                return String.valueOf(day);
             case "date_ordinal":
-                return getOrdinalNumber(calendar.get(Calendar.DAY_OF_MONTH));
+                return getOrdinalNumber(day);
             case "day_of_year":
-                return String.valueOf(calendar.get(Calendar.DAY_OF_YEAR));
+                return String.valueOf((month - 1) * 30 + day);
             case "month":
-                return String.valueOf(calendar.get(Calendar.MONTH) + 1);
+                return String.valueOf(month);
             case "season":
-                return getSeason(calendar.get(Calendar.MONTH) + 1);
+                return getSeason(month);
             case "year":
-                return String.valueOf(calendar.get(Calendar.YEAR));
+                return String.valueOf(year);
             case "dayparts":
                 return getDayPartSymbol(ticks);
             default:
@@ -61,11 +62,9 @@ public class TimeSyncPlaceholder extends PlaceholderExpansion {
     private String get12HourTime(long ticks) {
         int hours = (int) (((ticks / 1000) + 6) % 24);
         int minutes = (int) ((ticks % 1000) * 60 / 1000);
-
         String period = (hours >= 12) ? "PM" : "AM";
         if (hours > 12) hours -= 12;
         if (hours == 0) hours = 12;
-
         return String.format("%02d:%02d %s", hours, minutes, period);
     }
 
