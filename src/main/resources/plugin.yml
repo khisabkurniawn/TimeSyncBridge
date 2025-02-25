@@ -1,0 +1,9 @@
+name: TimeSyncBridge
+version: '${project.version}'
+main: com.arknesia.timesyncbridge.TimeSyncBridge
+api-version: '1.21'
+description: Synchronize world time with Velocity
+author: Lexivale
+depend: [PlaceholderAPI]
+commands: {}
+permissions: {}
