@@ -102,9 +102,9 @@ public class TimeSyncPlaceholder extends PlaceholderExpansion {
     }
 
     private String getDayPartSymbol(long ticks) {
-        if (ticks < 1000) return "&6☀";
-        if (ticks < 12000) return "&e☀";
-        if (ticks < 13000) return "&7☀";
-        return "&8☀";
+        if (ticks < 1000) return "ᜥ";
+        if (ticks < 12000) return "ᜦ";
+        if (ticks < 13000) return "ᜧ";
+        return "ᜨ";
     }
 }

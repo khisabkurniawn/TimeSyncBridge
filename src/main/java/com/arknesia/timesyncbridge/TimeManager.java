@@ -18,14 +18,14 @@ public class TimeManager {
         return currentTicks;
     }
 
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
     public String getCurrentTime() {
         int hours = (int) (((currentTicks / 1000) + 6) % 24);
         int minutes = (int) ((currentTicks % 1000) * 60 / 1000);
         return String.format("%02d:%02d", hours, minutes);
-    }
-
-    public String getCurrentDate() {
-        return currentDate;
     }
 
     public int getCurrentDay() {

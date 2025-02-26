@@ -24,11 +24,11 @@ public class TimeListener implements PluginMessageListener {
         long ticks = buffer.getLong();
         String date = readString(buffer);
 
-        plugin.getTimeManager().updateTime(ticks, date);
-
         for (World world : Bukkit.getWorlds()) {
             world.setTime(ticks);
         }
+
+        plugin.getTimeManager().updateTime(ticks, date);
     }
 
     private String readString(ByteBuffer buffer) {
